@@ -3,6 +3,16 @@ import Task from "../models/task.model.js";
 
 const router = express.Router();
 
+//Get all uniqes dates from tasks
+router.get("/", async (req, res) => {
+  try {
+    const dates = await Task.distinct("date");
+    res.json(dates);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch unique dates" });
+  }
+});
+
 // Get all tasks for a specific date
 router.get("/:date", async (req, res) => {
   try {

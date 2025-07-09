@@ -6,18 +6,25 @@ const Calendar = ({ onDateClick, taskDates }) => {
   const startOfMonth = today.startOf("month");
   const daysInMonth = today.daysInMonth();
   const firstDay = startOfMonth.day();
-
-  const isTaskDate = (date) =>
-    taskDates.includes(date.format("YYYY-MM-DD"));
+  // console.log(today);
+  // console.log(startOfMonth);
+  // console.log(firstDay);
+  // console.log(`today: ${today}`);
+  // console.log(`startofmonth: ${startOfMonth}`);
+  // console.log(`daysinmont: ${daysInMonth}`);
+  // console.log(`firstday: ${firstDay}`);
+  const isTaskDate = (date) => taskDates.includes(date.format("YYYY-MM-DD"));
 
   const daysArray = [];
   for (let i = 0; i < firstDay; i++) daysArray.push(null);
   for (let i = 1; i <= daysInMonth; i++) daysArray.push(dayjs().date(i));
-
+  // console.log(daysArray);
   return (
     <div className="grid grid-cols-7 gap-2">
       {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
-        <div key={d} className="text-center font-semibold">{d}</div>
+        <div key={d} className="text-center font-semibold">
+          {d}
+        </div>
       ))}
       {daysArray.map((date, index) => (
         <div

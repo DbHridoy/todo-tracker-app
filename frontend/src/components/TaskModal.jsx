@@ -6,37 +6,82 @@ const TaskModal = ({ date, onClose, onTasksChange }) => {
   const [newTask, setNewTask] = useState("");
 
   // Load tasks from localStorage (simulate a simple backend)
+  // useEffect(() => {
+  //   const stored = JSON.parse(localStorage.getItem("tasks")) || {};
+  //   setTasks(stored[date] || []);
+  // }, [date]);
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("tasks")) || {};
-    setTasks(stored[date] || []);
+    // console.log(`/api/tasks/${date}`);
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch(`/api/tasks/${date}`);
+        if (!response.ok) throw new Error("Failed to fetch tasks");
+        const data = await response.json();
+        setTasks(data);
+      } catch (error) {
+        console.error("❌ Error loading tasks:", error);
+      }
+    };
+    fetchTasks();
+    // console.log(tasks);
   }, [date]);
 
- const saveTasks = (updatedTasks) => {
-    const stored = JSON.parse(localStorage.getItem("tasks")) || {};
-    stored[date] = updatedTasks;
-    localStorage.setItem("tasks", JSON.stringify(stored));
-    setTasks(updatedTasks);
-    onTasksChange(); // ✅ notify parent to refresh taskDates
-  };
+  // const saveTasks = (updatedTasks) => {
+  //   // const response = async () => {
+  //   //   fetch(`/api/tasks`).then();
+  //   // };
+  //   const stored = JSON.parse(localStorage.getItem("tasks")) || {};
+  //   stored[date] = updatedTasks;
+  //   localStorage.setItem("tasks", JSON.stringify(stored));
+  //   setTasks(updatedTasks);
+  //   onTasksChange(); // ✅ notify parent to refresh taskDates
+  // };
 
-  const addTask = () => {
+  // const addTask = () => {
+  //   if (!newTask.trim()) return;
+  //   const updatedTasks = [...tasks, { id: Date.now(), text: newTask }];
+  //   saveTasks(updatedTasks);
+  //   setNewTask("");
+  // };
+  const addTask = async () => {
     if (!newTask.trim()) return;
-    const updatedTasks = [...tasks, { id: Date.now(), text: newTask }];
-    saveTasks(updatedTasks);
-    setNewTask("");
+
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          date: date, // e.g., "2025-07-09"
+          text: newTask,
+        }),
+      });
+      const data = await response.json();
+      console.log("✅ Task saved:", data);
+      // const updatedTasks = [...tasks, { id: Date.now(), text: newTask }];
+      // saveTasks(updatedTasks);
+      setNewTask("");
+      // refreshTasks(); // reload task list
+      onTasksChange(); // tell parent calendar to refresh dot
+    } catch (error) {
+      console.error("❌ Failed to save task:", error);
+    }
   };
 
-  const updateTask = (id, newText) => {
-    const updated = tasks.map((task) =>
-      task.id === id ? { ...task, text: newText } : task
-    );
-    saveTasks(updated);
-  };
+  // const updateTask = (id, newText) => {
+  //   const updated = tasks.map((task) =>
+  //     task.id === id ? { ...task, text: newText } : task
+  //   );
+  //   // saveTasks(updated);
+  // };
 
-  const deleteTask = (id) => {
-    const updated = tasks.filter((task) => task.id !== id);
-    saveTasks(updated);
-  };
+  // const deleteTask = (id) => {
+  // const updated = tasks.filter((task) => task.id !== id);
+  // const response=await fetch(`/api/tasks/${id}`, {
+  //   method: "DELETE",});
+  // saveTasks(updated);
+  // };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -63,10 +108,10 @@ const TaskModal = ({ date, onClose, onTasksChange }) => {
           {tasks.length ? (
             tasks.map((task) => (
               <TaskItem
-                key={task.id}
+                key={task._id}
                 task={task}
-                onUpdate={updateTask}
-                onDelete={deleteTask}
+                // onUpdate={updateTask}
+                // onDelete={deleteTask}
               />
             ))
           ) : (

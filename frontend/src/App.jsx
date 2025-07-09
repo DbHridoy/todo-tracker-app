@@ -6,15 +6,20 @@ function App() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [taskDates, setTaskDates] = useState([]);
 
-  const refreshTaskDates = () => {
-    const stored = JSON.parse(localStorage.getItem("tasks")) || {};
-    const activeDates = Object.keys(stored).filter((date) => stored[date].length > 0);
-    setTaskDates(activeDates);
+  const refreshTaskDates = async () => {
+    try {
+      const response = await fetch("api/tasks");
+      if (!response.ok) throw new Error("Failed to fetch task dates");
+      const data = await response.json();
+      setTaskDates(data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
     refreshTaskDates(); // initial load
-  }, []);
+  }, [taskDates]);
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
