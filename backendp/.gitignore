@@ -1,0 +1,148 @@
+############################################################################
+## A comprehensive .gitignore template                                    ##
+##                                                                        ##
+## Purpose: To prevent common, sensitive, or generated files from being   ##
+##          committed to your Git repository.                           ##
+## Usage: Copy this into a file named `.gitignore` in your project root.  ##
+## Customize it by removing sections that are not relevant to your stack. ##
+############################################################################
+
+############################
+## Secrets & Sensitive Data
+############################
+# NEVER commit sensitive data. This includes API keys, passwords, credentials.
+# Use environment variables or a secrets management system instead.
+#
+# Ignore all .env files
+.env*
+# But DO commit example/template files
+!.env.example
+!.env.sample
+
+# Ignore credential files and other sensitive configurations
+credentials.json
+credentials.yml
+config.py
+local_settings.py
+
+
+############################
+## Operating System Files
+############################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+.Trashes
+.Spotlight-V100
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+RECYCLE.BIN/
+
+
+############################
+## IDEs and Editors
+############################
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains (IntelliJ, PyCharm, WebStorm, etc.)
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim & Neovim
+*.swp
+*.swo
+*~
+.netrwhist
+
+
+############################
+## Dependencies & Packages
+############################
+# These are typically installed by a package manager and should not be versioned.
+
+# Node.js / JavaScript
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+*.so
+
+# Java
+*.jar
+*.war
+*.ear
+target/
+
+# .NET
+bin/
+obj/
+
+
+############################
+## Build & Compilation Artifacts
+############################
+# Files generated during the build process.
+
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+coverage/
+*.o
+*.out
+*.exe
+*.dll
+
+
+############################
+## Log and Cache Files
+############################
+
+*.log
+logs/
+*.log.*
+*.cache
+
+
+############################
+## Miscellaneous
+############################
+
+# Compressed files (unless they are part of the project itself)
+*.zip
+*.tar.*
+*.rar
+*.7z
+
+# Temporary files
+*.tmp
+*.temp
+*.bak

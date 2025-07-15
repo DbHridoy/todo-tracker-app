@@ -1,0 +1,43 @@
+# Ignore common build/dist folders
+build/
+dist/
+out/
+.next/
+.nuxt/
+.output/
+public/
+
+# Ignore node modules
+node_modules/
+
+# Ignore log files
+*.log
+logs/
+
+# Ignore temporary files
+*.tmp
+*.temp
+
+# Ignore minified files
+*.min.css
+*.min.js
+
+# Ignore dotfiles that are not meant to be formatted
+.env
+.env.*
+.vscode/
+
+# You can also ignore specific file types
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+
+# Or specific files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Documentation folders
+docs/
